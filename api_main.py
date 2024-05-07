@@ -57,6 +57,10 @@ def create_new_villager():
     print("Created Villager Data:", villager_data)
     return jsonify(villager_data)
 
+@app.route('/villagers', methods=['GET'])
+def list_villagers():
+    # Return all villagers in JSON format
+    return jsonify(villagers)
 
 @app.route('/villager_mod', methods=['POST'])
 def modify_villager():
