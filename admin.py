@@ -1,7 +1,6 @@
 import argparse
 import requests
 
-# Base URL of the Flask API
 API_URL = "http://127.0.0.1:5000"
 
 
@@ -33,6 +32,12 @@ def undo_last_event(villager_id):
 	print(response.json())
 
 
+def list_villagers():
+
+	response = requests.get(f'{API_URL}/villagers')
+	print(response.json())
+
+
 def main():
 	parser = argparse.ArgumentParser(description="Admin interface for the village API")
 	subparsers = parser.add_subparsers(dest='command')
@@ -52,6 +57,8 @@ def main():
 	parser_undo_event = subparsers.add_parser('undo_event')
 	parser_undo_event.add_argument('-id', required=True, type=int, help="Villager ID")
 
+	parser_list_villagers = subparsers.add_parser('list_villagers')
+
 	args = parser.parse_args()
 
 	if args.command == 'new_village':
@@ -64,6 +71,8 @@ def main():
 		add_event_to_villager(args.id, args.event)
 	elif args.command == 'undo_event':
 		undo_last_event(args.id)
+	elif args.command == 'list_villagers':
+		list_villagers()
 
 
 if __name__ == "__main__":
